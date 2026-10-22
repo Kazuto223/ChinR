@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0d14" />
+  <meta name="description" content="The personal website of Chinnagrid Rattanaburee — gaming, anime, and coding." />
+  <title>Chinnagrid Rattanaburee | Personal Website</title>
+  <style>
+    :root {
+      --bg: #0b0d14;
+      --surface: #121622;
+      --surface-2: #191f30;
+      --text: #f4f6ff;
+      --muted: #a6aec4;
+      --accent: #8b7cff;
+      --accent-2: #42e8c4;
+      --border: rgba(255,255,255,.09);
+      --shadow: 0 18px 60px rgba(0,0,0,.28);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 80% 0%, rgba(139,124,255,.13), transparent 35%),
+        radial-gradient(ellipse at 0% 35%, rgba(66,232,196,.06), transparent 28%),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .container { width: min(1120px, calc(100% - 40px)); margin: 0 auto; }
+    .topbar {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: blur(18px);
+      background: rgba(11,13,20,.78);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav { min-height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { font-weight: 800; letter-spacing: -.04em; font-size: 1.12rem; white-space: nowrap; }
+    .brand span { color: var(--accent-2); }
+    .nav-links { display: flex; align-items: center; gap: 24px; }
+    .nav-links a { color: var(--muted); font-size: .93rem; transition: color .2s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
+    .menu-toggle { display: none; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: 12px; padding: 9px 12px; cursor: pointer; }
+    .hero { padding: 104px 0 88px; }
+    .hero-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 60px; align-items: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 9px; padding: 7px 12px; border: 1px solid var(--border); border-radius: 999px; color: var(--accent-2); background: rgba(66,232,196,.06); font-size: .82rem; font-weight: 700; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-2); box-shadow: 0 0 14px var(--accent-2); }
+    h1 { margin: 22px 0 18px; max-width: 760px; font-size: clamp(2.65rem, 6vw, 5.4rem); line-height: .99; letter-spacing: -.065em; }
+    .gradient-text { background: linear-gradient(110deg, #f4f6ff 15%, #aaa0ff 55%, #42e8c4 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .hero p { max-width: 620px; color: var(--muted); font-size: 1.08rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 13px; margin-top: 30px; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 12px 18px; border-radius: 13px; border: 1px solid var(--border); font-weight: 750; cursor: pointer; transition: transform .2s, border-color .2s, background .2s; }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--accent); color: #fff; border-color: transparent; box-shadow: 0 8px 28px rgba(139,124,255,.25); }
+    .btn-secondary { background: rgba(255,255,255,.035); color: var(--text); }
+    .hero-card {
+      position: relative; min-height: 350px; display: grid; place-items: center;
+      border: 1px solid var(--border); border-radius: 30px; overflow: hidden;
+      background: linear-gradient(145deg, rgba(139,124,255,.16), rgba(66,232,196,.04) 55%, rgba(255,255,255,.02));
+      box-shadow: var(--shadow);
+    }
+    .hero-card::before, .hero-card::after { content: ""; position: absolute; border: 1px solid rgba(255,255,255,.1); border-radius: 50%; }
+    .hero-card::before { width: 300px; height: 300px; }
+    .hero-card::after { width: 220px; height: 220px; }
+    .avatar {
+      position: relative; z-index: 1; width: 155px; height: 155px; display: grid; place-items: center;
+      border-radius: 36px; transform: rotate(-7deg);
+      background: linear-gradient(135deg, var(--accent), #4cdbd0);
+      box-shadow: 0 22px 70px rgba(139,124,255,.28);
+      font-size: 3.3rem; font-weight: 900; letter-spacing: -.08em;
+    }
+    .floating-tag { position: absolute; padding: 9px 13px; background: #161b29; border: 1px solid var(--border); border-radius: 13px; color: var(--muted); font-size: .83rem; box-shadow: var(--shadow); }
+    .tag-one { top: 20%; left: 7%; }
+    .tag-two { right: 7%; top: 30%; }
+    .tag-three { bottom: 17%; left: 15%; }
+    section { padding: 70px 0; }
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 30px; }
+    .section-kicker { color: var(--accent-2); text-transform: uppercase; letter-spacing: .14em; font-size: .76rem; font-weight: 850; }
+    h2 { margin: 7px 0 0; font-size: clamp(1.9rem, 4vw, 3rem); letter-spacing: -.045em; line-height: 1.1; }
+    .section-heading p { color: var(--muted); max-width: 450px; margin: 0; }
+    .about-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 22px; }
+    .panel { padding: 28px; border: 1px solid var(--border); border-radius: var(--radius); background: rgba(18,22,34,.8); }
+    .panel p { color: var(--muted); margin: 10px 0 0; }
+    .quick-facts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .fact { padding: 19px; border-radius: 17px; background: var(--surface-2); border: 1px solid var(--border); }
+    .fact strong { display: block; font-size: 1.1rem; margin-bottom: 4px; }
+    .fact span { color: var(--muted); font-size: .87rem; }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .hobby-card, .media-card, .skill-card {
+      border: 1px solid var(--border); background: linear-gradient(150deg, rgba(25,31,48,.9), rgba(18,22,34,.9));
+      border-radius: var(--radius); padding: 24px; transition: transform .22s, border-color .22s;
+    }
+    .hobby-card:hover, .media-card:hover, .skill-card:hover { transform: translateY(-5px); border-color: rgba(139,124,255,.55); }
+    .icon-box { width: 50px; height: 50px; display: grid; place-items: center; border-radius: 15px; font-size: 1.45rem; background: rgba(139,124,255,.13); margin-bottom: 18px; }
+    h3 { margin: 0; font-size: 1.14rem; letter-spacing: -.02em; }
+    .hobby-card p, .media-card p, .skill-card p { color: var(--muted); font-size: .94rem; margin: 9px 0 0; }
+    .media-tools { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 20px; }
+    .filter-btn { padding: 8px 14px; color: var(--muted); border: 1px solid var(--border); border-radius: 999px; background: transparent; cursor: pointer; }
+    .filter-btn[aria-pressed="true"] { background: rgba(139,124,255,.18); border-color: rgba(139,124,255,.65); color: var(--text); }
+    .media-card { min-height: 200px; display: flex; flex-direction: column; align-items: flex-start; }
+    .media-card .type { color: var(--accent-2); font-size: .75rem; text-transform: uppercase; letter-spacing: .12em; font-weight: 850; margin-bottom: 10px; }
+    .media-card .edit-note { margin-top: auto; padding-top: 16px; color: #8790aa; font-size: .78rem; }
+    .skill-list { display: grid; gap: 18px; }
+    .skill-top { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 9px; }
+    .skill-top span:last-child { color: var(--muted); font-size: .84rem; }
+    .track { height: 8px; background: #272d40; border-radius: 999px; overflow: hidden; }
+    .fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--accent), var(--accent-2)); width: var(--level); }
+    .skill-note { color: var(--muted); font-size: .86rem; margin-top: 18px; }
+    .cta { padding: 34px; border: 1px solid rgba(139,124,255,.32); border-radius: 26px; background: linear-gradient(115deg, rgba(139,124,255,.13), rgba(66,232,196,.06)); display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .cta p { color: var(--muted); margin: 8px 0 0; }
+    footer { padding: 28px 0 36px; color: var(--muted); font-size: .87rem; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 18px; border-top: 1px solid var(--border); padding-top: 23px; }
+    .back-top { color: var(--text); }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); padding: 12px 16px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); opacity: 0; pointer-events: none; transition: .25s; z-index: 20; }
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    @media (max-width: 820px) {
+      .hero { padding-top: 70px; }
+      .hero-grid, .about-grid { grid-template-columns: 1fr; }
+      .hero-grid { gap: 35px; }
+      .hero-card { min-height: 300px; }
+      .cards { grid-template-columns: repeat(2, 1fr); }
+      .section-heading { align-items: flex-start; flex-direction: column; }
+    }
+    @media (max-width: 600px) {
+      .container { width: min(100% - 28px, 1120px); }
+      .nav { min-height: 66px; }
+      .menu-toggle { display: inline-flex; }
+      .nav-links { display: none; position: absolute; top: 65px; left: 0; right: 0; padding: 18px 22px 22px; background: rgba(11,13,20,.97); border-bottom: 1px solid var(--border); flex-direction: column; align-items: stretch; gap: 16px; }
+      .nav-links.open { display: flex; }
+      .nav-links a { padding: 5px 0; }
+      .hero { padding: 58px 0 45px; }
+      h1 { font-size: clamp(2.5rem, 13vw, 4rem); }
+      section { padding: 52px 0; }
+      .cards, .quick-facts { grid-template-columns: 1fr; }
+      .panel, .hobby-card, .media-card, .skill-card { padding: 22px; }
+      .cta, .footer-inner { flex-direction: column; align-items: flex-start; }
+      .tag-one { left: 4%; }
+      .tag-two { right: 4%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <nav class="nav container" aria-label="Main navigation">
+      <a class="brand" href="#home">Chinnagrid<span>.</span></a>
+      <button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Toggle navigation">☰ Menu</button>
+      <div class="nav-links" id="navLinks">
+        <a href="#about">About</a>
+        <a href="#hobbies">Hobbies</a>
+        <a href="#favorites">Games & Anime</a>
+        <a href="#skills">Skills</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow"><span class="dot"></span> Welcome to my corner of the internet</div>
+          <h1>Hi, I'm <span class="gradient-text">Chinnagrid Rattanaburee.</span></h1>
+          <p>I'm into gaming, anime, and coding. This is my personal space to share what I enjoy, what I'm learning, and the things that inspire me.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#about">Get to know me <span aria-hidden="true">↘</span></a>
+            <a class="btn btn-secondary" href="#favorites">Explore my interests</a>
+          </div>
+        </div>
+        <div class="hero-card" aria-label="Decorative initials artwork">
+          <span class="floating-tag tag-one">🎮 Gaming</span>
+          <span class="floating-tag tag-two">⌘ Coding</span>
+          <span class="floating-tag tag-three">✦ Anime fan</span>
+          <div class="avatar" aria-hidden="true">CR</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div><div class="section-kicker">A little introduction</div><h2>About me</h2></div>
+          <p>A quick snapshot of who I am and what I'm interested in.</p>
+        </div>
+        <div class="about-grid">
+          <article class="panel reveal">
+            <h3>Hey, nice to meet you!</h3>
+            <p>My name is Chinnagrid Rattanaburee. I enjoy exploring games, getting invested in anime stories and characters, and learning how to bring ideas to life through code.</p>
+            <p>This website is a small introduction to my interests and skills. As I learn more and create new things, I'll keep updating it with projects and favorites.</p>
+          </article>
+          <div class="quick-facts reveal">
+            <div class="fact"><strong>🎮 Gamer</strong><span>Discovering worlds and challenges</span></div>
+            <div class="fact"><strong>🍿 Anime fan</strong><span>Stories, characters, and hype moments</span></div>
+            <div class="fact"><strong>💻 Coding</strong><span>Learning by building</span></div>
+            <div class="fact"><strong>🚀 Always learning</strong><span>Curious about what's next</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="hobbies">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div><div class="section-kicker">What I enjoy</div><h2>My hobbies</h2></div>
+          <p>Three interests that make up a big part of my free time.</p>
+        </div>
+        <div class="cards">
+          <article class="hobby-card reveal">
+            <div class="icon-box">🎮</div><h3>Gaming</h3>
+            <p>I enjoy playing games, improving my skills, exploring different worlds, and taking on memorable challenges.</p>
+          </article>
+          <article class="hobby-card reveal">
+            <div class="icon-box">🌌</div><h3>Anime</h3>
+            <p>I like anime for its creative worlds, unforgettable characters, exciting battles, and stories that stay with you.</p>
+          </article>
+          <article class="hobby-card reveal">
+            <div class="icon-box">⌨️</div><h3>Coding</h3>
+            <p>I'm interested in programming and making ideas real, one small project and one new concept at a time.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="favorites">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div><div class="section-kicker">My current picks</div><h2>Favorite games & anime</h2></div>
+          <p>These are starter cards you can personalize with your actual favorites.</p>
+        </div>
+        <div class="media-tools reveal" role="group" aria-label="Filter favorites">
+          <button class="filter-btn" data-filter="all" aria-pressed="true">All</button>
+          <button class="filter-btn" data-filter="game" aria-pressed="false">Games</button>
+          <button class="filter-btn" data-filter="anime" aria-pressed="false">Anime</button>
+        </div>
+        <div class="cards" id="favoriteCards">
+          <article class="media-card reveal" data-category="game">
+            <div class="type">Game</div><h3>Hollow Knight</h3>
+            <p>A mysterious world, precise combat, and challenging exploration.</p>
+            <div class="edit-note">Edit this card to add your own favorite.</div>
+          </article>
+          <article class="media-card reveal" data-category="anime">
+            <div class="type">Anime</div><h3>JoJo's Bizarre Adventure</h3>
+            <p>Bold style, creative battles, and unforgettable character connections.</p>
+            <div class="edit-note">Edit this card to add your own favorite.</div>
+          </article>
+          <article class="media-card reveal" data-category="game">
+            <div class="type">Game</div><h3>Another favorite</h3>
+            <p>Replace this with a game you love and a sentence about why.</p>
+            <div class="edit-note">Your pick goes here</div>
+          </article>
+          <article class="media-card reveal" data-category="anime">
+            <div class="type">Anime</div><h3>Another favorite</h3>
+            <p>Replace this with an anime you enjoy and what makes it special.</p>
+            <div class="edit-note">Your pick goes here</div>
+          </article>
+          <article class="media-card reveal" data-category="game">
+            <div class="type">Game</div><h3>Currently playing</h3>
+            <p>Add the game you're playing lately or working to complete.</p>
+            <div class="edit-note">Your pick goes here</div>
+          </article>
+          <article class="media-card reveal" data-category="anime">
+            <div class="type">Anime</div><h3>On my watchlist</h3>
+            <p>Add an anime you want to watch next.</p>
+            <div class="edit-note">Your pick goes here</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div><div class="section-kicker">Things I'm learning</div><h2>My skills</h2></div>
+          <p>A starting point for showing what you know and what you're developing.</p>
+        </div>
+        <div class="panel reveal">
+          <div class="skill-list">
+            <div>
+              <div class="skill-top"><strong>HTML & CSS</strong><span>Learning / practicing</span></div>
+              <div class="track" role="img" aria-label="HTML and CSS progress is a decorative placeholder"><div class="fill" style="--level: 62%"></div></div>
+            </div>
+            <div>
+              <div class="skill-top"><strong>Python</strong><span>Learning / practicing</span></div>
+              <div class="track" role="img" aria-label="Python progress is a decorative placeholder"><div class="fill" style="--level: 48%"></div></div>
+            </div>
+            <div>
+              <div class="skill-top"><strong>Problem solving</strong><span>Growing every day</span></div>
+              <div class="track" role="img" aria-label="Problem solving progress is a decorative placeholder"><div class="fill" style="--level: 55%"></div></div>
+            </div>
+          </div>
+          <p class="skill-note">The bars are visual placeholders, not a test or an objective rating. Adjust them in the HTML to reflect your own comfort level, or replace them with a list of technologies you've used.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="cta reveal">
+          <div><div class="section-kicker">Thanks for stopping by</div><h2>More to come.</h2><p>As I learn and create more, this website will grow with me.</p></div>
+          <a class="btn btn-primary" href="#home">Back to top ↑</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> Chinnagrid Rattanaburee</span>
+      <span>Built with curiosity, code, and a little bit of gaming energy.</span>
+    </div>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    // Mobile navigation
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      menuToggle.setAttribute('aria-expanded', String(isOpen));
+      menuToggle.textContent = isOpen ? '✕ Close' : '☰ Menu';
+    });
+
+    navLinks.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.textContent = '☰ Menu';
+      });
+    });
+
+    // Filter game and anime cards
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const favoriteCards = document.querySelectorAll('#favoriteCards [data-category]');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter;
+        filterButtons.forEach(item => item.setAttribute('aria-pressed', String(item === button)));
+        favoriteCards.forEach(card => {
+          card.hidden = filter !== 'all' && card.dataset.category !== filter;
+        });
+      });
+    });
+
+    // Reveal sections as they enter the viewport, with a fallback for older browsers
+    const revealItems = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      revealItems.forEach(item => observer.observe(item));
+    } else {
+      revealItems.forEach(item => item.classList.add('visible'));
+    }
+
+    // Highlight the current section in the navigation
+    const sections = document.querySelectorAll('main section[id]');
+    const navAnchors = navLinks.querySelectorAll('a');
+    if ('IntersectionObserver' in window) {
+      const sectionObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            navAnchors.forEach(anchor => {
+              anchor.classList.toggle('active', anchor.getAttribute('href') === '#' + entry.target.id);
+            });
+          }
+        });
+      }, { rootMargin: '-25% 0px -65% 0px' });
+      sections.forEach(section => sectionObserver.observe(section));
+    }
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
